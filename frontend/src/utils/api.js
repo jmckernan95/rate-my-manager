@@ -1,4 +1,5 @@
-const API_BASE = '/api';
+// Use environment variable or default to production API
+const API_BASE = import.meta.env.VITE_API_URL || 'https://rate-my-manager-api.onrender.com/api';
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('token');
