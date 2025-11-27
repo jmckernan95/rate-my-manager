@@ -2,6 +2,7 @@ import { Router } from 'express';
 import {
   searchManagers,
   getTrendingManagers,
+  getWorstRatedManagers,
   getManagerById,
   createManager,
   getAllCompanies,
@@ -32,6 +33,18 @@ router.get('/trending', async (req, res) => {
   } catch (error) {
     console.error('Trending error:', error);
     res.status(500).json({ error: 'Failed to get trending managers' });
+  }
+});
+
+// GET /api/managers/worst
+router.get('/worst', async (req, res) => {
+  try {
+    const limit = parseInt(req.query.limit) || 5;
+    const managers = await getWorstRatedManagers(limit);
+    res.json({ managers });
+  } catch (error) {
+    console.error('Worst rated error:', error);
+    res.status(500).json({ error: 'Failed to get worst rated managers' });
   }
 });
 

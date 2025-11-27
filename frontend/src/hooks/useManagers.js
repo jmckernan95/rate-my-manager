@@ -16,6 +16,13 @@ export const useTrendingManagers = (limit = 5) => {
   });
 };
 
+export const useWorstRatedManagers = (limit = 5) => {
+  return useQuery({
+    queryKey: ['managers', 'worst', limit],
+    queryFn: () => api.getWorstRatedManagers(limit),
+  });
+};
+
 export const useManager = (id) => {
   return useQuery({
     queryKey: ['managers', id],

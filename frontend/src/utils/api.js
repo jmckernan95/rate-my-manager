@@ -53,6 +53,11 @@ export const api = {
     return handleResponse(response);
   },
 
+  getWorstRatedManagers: async (limit = 5) => {
+    const response = await fetch(`${API_BASE}/managers/worst?limit=${limit}`);
+    return handleResponse(response);
+  },
+
   getManager: async (id) => {
     const response = await fetch(`${API_BASE}/managers/${id}`);
     return handleResponse(response);

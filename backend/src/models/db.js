@@ -145,6 +145,23 @@ export const getTrendingManagers = async (limit = 5) => {
   });
 };
 
+export const getWorstRatedManagers = async (limit = 5) => {
+  return withDbRead(() => {
+    const result = db.exec(`
+      SELECT m.*,
+             COUNT(r.id) as review_count,
+             ROUND(AVG(r.overall_rating), 1) as avg_rating
+      FROM managers m
+      LEFT JOIN reviews r ON m.id = r.manager_id
+      GROUP BY m.id
+      HAVING review_count >= 1
+      ORDER BY avg_rating ASC, review_count DESC
+      LIMIT ?
+    `, [limit]);
+    return toObjects(result);
+  });
+};
+
 export const getManagerById = async (id) => {
   return withDbRead(() => {
     const result = db.exec(`

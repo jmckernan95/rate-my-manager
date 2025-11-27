@@ -3,14 +3,24 @@ import { Card, CardContent } from './ui/Card';
 import { StarRating } from './StarRating';
 import { Building2, Users, Briefcase } from 'lucide-react';
 
-export const ManagerCard = ({ manager }) => {
+export const ManagerCard = ({ manager, variant = 'default' }) => {
+  const isWarning = variant === 'warning';
+
   return (
     <Link to={`/manager/${manager.id}`}>
-      <Card className="hover:shadow-md hover:border-blue-200 transition-all duration-200 cursor-pointer">
+      <Card className={`hover:shadow-md transition-all duration-200 cursor-pointer ${
+        isWarning
+          ? 'border-red-200 bg-white hover:border-red-300'
+          : 'hover:border-blue-200'
+      }`}>
         <CardContent>
           <div className="flex items-start justify-between">
             <div className="flex-grow">
-              <h3 className="text-lg font-semibold text-slate-900 hover:text-blue-600 transition-colors">
+              <h3 className={`text-lg font-semibold transition-colors ${
+                isWarning
+                  ? 'text-red-900 hover:text-red-700'
+                  : 'text-slate-900 hover:text-blue-600'
+              }`}>
                 {manager.name}
               </h3>
               <div className="flex items-center gap-4 mt-2 text-sm text-slate-600">

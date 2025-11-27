@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import { SearchBar } from '../components/SearchBar';
 import { ManagerCard } from '../components/ManagerCard';
-import { useTrendingManagers } from '../hooks/useManagers';
+import { useTrendingManagers, useWorstRatedManagers } from '../hooks/useManagers';
 import { Spinner } from '../components/ui/Spinner';
-import { Shield, Eye, TrendingUp, Users } from 'lucide-react';
+import { Shield, Eye, TrendingUp, Users, AlertTriangle } from 'lucide-react';
 
 const FeatureCard = ({ icon: Icon, title, description }) => (
   <div className="text-center p-6">
@@ -17,6 +17,7 @@ const FeatureCard = ({ icon: Icon, title, description }) => (
 
 export default function Landing() {
   const { data, isLoading } = useTrendingManagers(5);
+  const { data: worstData, isLoading: worstLoading } = useWorstRatedManagers(1);
 
   return (
     <div>
@@ -37,6 +38,32 @@ export default function Landing() {
           </div>
         </div>
       </section>
+
+      {/* Trending Worst Managers */}
+      {worstData?.managers?.length > 0 && (
+        <section className="py-12 bg-red-50 border-y border-red-100">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center gap-3 mb-6">
+              <AlertTriangle className="w-6 h-6 text-red-600" />
+              <h2 className="text-xl font-bold text-red-900">
+                Trending Worst Managers
+              </h2>
+            </div>
+
+            {worstLoading ? (
+              <div className="flex justify-center py-8">
+                <Spinner size="lg" />
+              </div>
+            ) : (
+              <div className="grid gap-4">
+                {worstData.managers.map((manager) => (
+                  <ManagerCard key={manager.id} manager={manager} variant="warning" />
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
+      )}
 
       {/* How It Works */}
       <section className="py-16 bg-white">

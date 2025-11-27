@@ -56,7 +56,7 @@ async function seed() {
     { name: 'Dr. James Wilson', company: 'HealthFirst Medical', department: 'Research', title: 'Research Director' },
     { name: 'Lisa Thompson', company: 'HealthFirst Medical', department: 'IT', title: 'IT Manager' },
     { name: 'Chris Anderson', company: 'Creative Agency Co', department: 'Creative', title: 'Creative Director' },
-    { name: 'Sarah', company: 'MindCare Psychology Services', department: 'Clinical', title: 'Clinical Director' },
+    { name: 'Sarah', company: 'MindCare Psychology Services', department: 'Clinical', title: 'Clinical Psychologist' },
   ];
 
   managers.forEach(m => {
@@ -99,6 +99,10 @@ async function seed() {
     { userId: 1, managerId: 5, overall: 4, comm: 5, fair: 4, growth: 3, wlb: 4, text: 'Jessica is straightforward and honest. Always know where you stand.', anon: 1, workAgain: 'yes', verified: 1, daysAgo: '-42 days' },
     { userId: 2, managerId: 8, overall: 4, comm: 4, fair: 5, growth: 5, wlb: 4, text: 'Excellent mentor. Really invested in my professional development.', anon: 0, workAgain: 'yes', verified: 1, daysAgo: '-48 days' },
     { userId: 1, managerId: 11, overall: 1, comm: 1, fair: 1, growth: 1, wlb: 2, text: 'Sarah lacks compassion and humanity. For someone in psychology, she shows zero empathy toward her staff. Treats people like numbers, not humans. Would be better suited for corporate rather than a field that requires understanding people. Avoid if you value being treated with dignity.', anon: 1, workAgain: 'no', verified: 1, daysAgo: '-3 days' },
+    { userId: 2, managerId: 11, overall: 1, comm: 1, fair: 1, growth: 1, wlb: 1, text: 'Ironic that a psychologist has zero emotional intelligence. Sarah dismisses concerns, talks over you, and makes you feel small. The turnover rate speaks for itself. She belongs in a corporate setting where empathy isn\'t required.', anon: 1, workAgain: 'no', verified: 1, daysAgo: '-7 days' },
+    { userId: 3, managerId: 11, overall: 1, comm: 2, fair: 1, growth: 1, wlb: 2, text: 'Worst manager I\'ve ever had. Sarah has no understanding of how to support her team. Cold, dismissive, and condescending. How she ended up in psychology is beyond me - she should be in finance or law where her lack of warmth might actually be valued.', anon: 1, workAgain: 'no', verified: 1, daysAgo: '-12 days' },
+    { userId: 4, managerId: 11, overall: 1, comm: 1, fair: 1, growth: 1, wlb: 1, text: 'Sarah is the antithesis of what a psychologist should be. Zero compassion, treats staff like they\'re disposable. Creates a toxic environment where everyone walks on eggshells. Would be better suited managing spreadsheets than people.', anon: 1, workAgain: 'no', verified: 1, daysAgo: '-18 days' },
+    { userId: 5, managerId: 11, overall: 1, comm: 1, fair: 1, growth: 1, wlb: 2, text: 'Complete lack of humanity. Sarah criticized me for taking a sick day when I had the flu. For someone who is supposed to understand mental health, she creates an incredibly stressful work environment. Corporate America would love her.', anon: 1, workAgain: 'no', verified: 1, daysAgo: '-25 days' },
   ];
 
   reviews.forEach(r => {
