@@ -11,19 +11,19 @@ import { reviewValidation, paginationValidation } from '../middleware/validation
 const router = Router();
 
 // GET /api/reviews/manager/:managerId
-router.get('/manager/:managerId', paginationValidation, (req, res) => {
+router.get('/manager/:managerId', paginationValidation, async (req, res) => {
   try {
     const { managerId } = req.params;
     const limit = parseInt(req.query.limit) || 20;
     const offset = parseInt(req.query.offset) || 0;
 
     // Check if manager exists
-    const manager = getManagerById(managerId);
+    const manager = await getManagerById(managerId);
     if (!manager) {
       return res.status(404).json({ error: 'Manager not found' });
     }
 
-    const reviews = getReviewsByManagerId(managerId, limit, offset);
+    const reviews = await getReviewsByManagerId(managerId, limit, offset);
     res.json({ reviews });
   } catch (error) {
     console.error('Get reviews error:', error);
@@ -32,7 +32,7 @@ router.get('/manager/:managerId', paginationValidation, (req, res) => {
 });
 
 // POST /api/reviews
-router.post('/', authMiddleware, reviewValidation, (req, res) => {
+router.post('/', authMiddleware, reviewValidation, async (req, res) => {
   try {
     const userId = req.userId;
     const {
@@ -48,17 +48,17 @@ router.post('/', authMiddleware, reviewValidation, (req, res) => {
     } = req.body;
 
     // Check if manager exists
-    const manager = getManagerById(manager_id);
+    const manager = await getManagerById(manager_id);
     if (!manager) {
       return res.status(404).json({ error: 'Manager not found' });
     }
 
     // Check if user already reviewed this manager
-    if (hasUserReviewedManager(userId, manager_id)) {
+    if (await hasUserReviewedManager(userId, manager_id)) {
       return res.status(400).json({ error: 'You have already reviewed this manager' });
     }
 
-    const result = createReview(userId, manager_id, {
+    const result = await createReview(userId, manager_id, {
       overall_rating,
       communication,
       fairness,

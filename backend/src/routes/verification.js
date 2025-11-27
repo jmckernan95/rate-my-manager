@@ -22,7 +22,7 @@ router.post('/request', authMiddleware, verificationRequestValidation, async (re
     const { manager_id, work_email, employment_start, employment_end } = req.body;
 
     // Check if manager exists
-    const manager = getManagerById(manager_id);
+    const manager = await getManagerById(manager_id);
     if (!manager) {
       return res.status(404).json({ error: 'Manager not found' });
     }
@@ -31,7 +31,7 @@ router.post('/request', authMiddleware, verificationRequestValidation, async (re
     const code = generateVerificationCode();
 
     // Store verification request
-    createVerification(
+    await createVerification(
       userId,
       manager_id,
       work_email,
@@ -62,16 +62,16 @@ router.post('/confirm', authMiddleware, verificationConfirmValidation, async (re
     const { manager_id, code } = req.body;
 
     // Find matching verification
-    const verification = getVerificationByCode(userId, manager_id, code);
+    const verification = await getVerificationByCode(userId, manager_id, code);
     if (!verification) {
       return res.status(400).json({ error: 'Invalid or expired verification code' });
     }
 
     // Mark verification as complete
-    markVerificationComplete(verification.id);
+    await markVerificationComplete(verification.id);
 
     // Mark the user's review as verified
-    markReviewVerified(userId, manager_id);
+    await markReviewVerified(userId, manager_id);
 
     res.json({
       message: 'Employment verified successfully',

@@ -12,10 +12,10 @@ import { managerValidation, searchValidation } from '../middleware/validation.js
 const router = Router();
 
 // GET /api/managers/search
-router.get('/search', searchValidation, (req, res) => {
+router.get('/search', searchValidation, async (req, res) => {
   try {
     const { q, company } = req.query;
-    const managers = searchManagers(q, company);
+    const managers = await searchManagers(q, company);
     res.json({ managers });
   } catch (error) {
     console.error('Search error:', error);
@@ -24,10 +24,10 @@ router.get('/search', searchValidation, (req, res) => {
 });
 
 // GET /api/managers/trending
-router.get('/trending', (req, res) => {
+router.get('/trending', async (req, res) => {
   try {
     const limit = parseInt(req.query.limit) || 5;
-    const managers = getTrendingManagers(limit);
+    const managers = await getTrendingManagers(limit);
     res.json({ managers });
   } catch (error) {
     console.error('Trending error:', error);
@@ -36,9 +36,9 @@ router.get('/trending', (req, res) => {
 });
 
 // GET /api/managers/companies
-router.get('/companies', (req, res) => {
+router.get('/companies', async (req, res) => {
   try {
-    const companies = getAllCompanies();
+    const companies = await getAllCompanies();
     res.json({ companies });
   } catch (error) {
     console.error('Companies error:', error);
@@ -47,9 +47,9 @@ router.get('/companies', (req, res) => {
 });
 
 // GET /api/managers/:id
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
-    const manager = getManagerById(req.params.id);
+    const manager = await getManagerById(req.params.id);
     if (!manager) {
       return res.status(404).json({ error: 'Manager not found' });
     }
@@ -61,10 +61,10 @@ router.get('/:id', (req, res) => {
 });
 
 // POST /api/managers
-router.post('/', authMiddleware, managerValidation, (req, res) => {
+router.post('/', authMiddleware, managerValidation, async (req, res) => {
   try {
     const { name, company, department, title } = req.body;
-    const result = createManager(name, company, department || null, title || null);
+    const result = await createManager(name, company, department || null, title || null);
 
     res.status(201).json({
       message: 'Manager profile created',

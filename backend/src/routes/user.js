@@ -5,17 +5,17 @@ import { authMiddleware } from '../middleware/auth.js';
 const router = Router();
 
 // GET /api/user/dashboard
-router.get('/dashboard', authMiddleware, (req, res) => {
+router.get('/dashboard', authMiddleware, async (req, res) => {
   try {
     const userId = req.userId;
 
-    const user = getUserById(userId);
+    const user = await getUserById(userId);
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    const reviews = getReviewsByUserId(userId);
-    const verifications = getUserVerifications(userId);
+    const reviews = await getReviewsByUserId(userId);
+    const verifications = await getUserVerifications(userId);
 
     res.json({
       user: {
@@ -37,9 +37,9 @@ router.get('/dashboard', authMiddleware, (req, res) => {
 });
 
 // GET /api/user/me
-router.get('/me', authMiddleware, (req, res) => {
+router.get('/me', authMiddleware, async (req, res) => {
   try {
-    const user = getUserById(req.userId);
+    const user = await getUserById(req.userId);
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }

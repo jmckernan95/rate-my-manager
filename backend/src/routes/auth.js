@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { createUser, getUserByEmail } from '../models/db.js';
 import { generateToken } from '../middleware/auth.js';
 import { signupValidation, loginValidation } from '../middleware/validation.js';
@@ -12,7 +12,7 @@ router.post('/signup', signupValidation, async (req, res) => {
     const { email, password } = req.body;
 
     // Check if user already exists
-    const existingUser = getUserByEmail(email);
+    const existingUser = await getUserByEmail(email);
     if (existingUser) {
       return res.status(400).json({ error: 'Email already registered' });
     }
@@ -21,7 +21,7 @@ router.post('/signup', signupValidation, async (req, res) => {
     const passwordHash = await bcrypt.hash(password, 10);
 
     // Create user
-    const result = createUser(email, passwordHash);
+    const result = await createUser(email, passwordHash);
     const token = generateToken(result.lastInsertRowid);
 
     res.status(201).json({
@@ -44,7 +44,7 @@ router.post('/login', loginValidation, async (req, res) => {
     const { email, password } = req.body;
 
     // Find user
-    const user = getUserByEmail(email);
+    const user = await getUserByEmail(email);
     if (!user) {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
