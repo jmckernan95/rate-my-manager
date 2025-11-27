@@ -49,7 +49,7 @@ export const SearchBar = ({
           className={`
             w-full border border-slate-300 rounded-lg
             focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
-            placeholder:text-slate-400
+            placeholder:text-slate-400 text-slate-900 bg-white
             ${sizes[size]}
           `}
         />
