@@ -56,13 +56,14 @@ async function seed() {
     { name: 'Dr. James Wilson', company: 'HealthFirst Medical', department: 'Research', title: 'Research Director' },
     { name: 'Lisa Thompson', company: 'HealthFirst Medical', department: 'IT', title: 'IT Manager' },
     { name: 'Chris Anderson', company: 'Creative Agency Co', department: 'Creative', title: 'Creative Director' },
+    { name: 'Sarah', company: 'MindCare Psychology Services', department: 'Clinical', title: 'Clinical Director' },
   ];
 
   managers.forEach(m => {
     db.run('INSERT INTO managers (name, company, department, title) VALUES (?, ?, ?, ?)',
       [m.name, m.company, m.department, m.title]);
   });
-  console.log('Created 10 managers...');
+  console.log('Created 11 managers...');
 
   // Seed reviews
   const reviews = [
@@ -97,6 +98,7 @@ async function seed() {
     { userId: 4, managerId: 2, overall: 3, comm: 3, fair: 3, growth: 4, wlb: 2, text: 'Product people love him, engineers not so much. Mixed bag.', anon: 1, workAgain: 'maybe', verified: 0, daysAgo: '-38 days' },
     { userId: 1, managerId: 5, overall: 4, comm: 5, fair: 4, growth: 3, wlb: 4, text: 'Jessica is straightforward and honest. Always know where you stand.', anon: 1, workAgain: 'yes', verified: 1, daysAgo: '-42 days' },
     { userId: 2, managerId: 8, overall: 4, comm: 4, fair: 5, growth: 5, wlb: 4, text: 'Excellent mentor. Really invested in my professional development.', anon: 0, workAgain: 'yes', verified: 1, daysAgo: '-48 days' },
+    { userId: 1, managerId: 11, overall: 1, comm: 1, fair: 1, growth: 1, wlb: 2, text: 'Sarah lacks compassion and humanity. For someone in psychology, she shows zero empathy toward her staff. Treats people like numbers, not humans. Would be better suited for corporate rather than a field that requires understanding people. Avoid if you value being treated with dignity.', anon: 1, workAgain: 'no', verified: 1, daysAgo: '-3 days' },
   ];
 
   reviews.forEach(r => {
